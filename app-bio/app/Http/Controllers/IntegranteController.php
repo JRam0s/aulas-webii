@@ -63,14 +63,46 @@ class IntegranteController extends Controller {
     }
 
     public function edit($id) {
-        
+
+        $dados = Integrante::find($id);
+
+        if(!isset($dados)) { return "<h1>ID: $id não encontrado!</h1>"; }
+
+        return view('integrante.edit', compact('dados')); 
+
     }
 
     public function update(Request $request, $id) {
+
+        $regras = [
+            'nome' => 'required|max:100|min:10',
+            'biografia' => 'required|max:1000|min:20',
+        ];
+
+        $msgs = [
+            "required" => "O preenchimento do campo [:attribute] é obrigatório!",
+            "max" => "O campo [:attribute] possui tamanho máximo de [:max] caracteres!",
+            "min" => "O campo [:attribute] possui tamanho mínimo de [:min] caracteres!",
+        ];
+        $request->validate($regras, $msgs);
+
+        $reg = Integrante::find($id);
+
+        if(isset($reg)) {
+            $reg->nome = $request->nome;
+            $reg->biografia = $request->biografia;
+            $reg->save();
+        }
+
+        return redirect()->route('integrante.index');
         
     }
 
     public function destroy($id) {
+
+        $reg = Integrante::find($id);
+        $reg->delete();
+        return redirect()->route('integrante.index');
         
     }
 }
