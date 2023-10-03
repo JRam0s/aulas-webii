@@ -68,8 +68,7 @@ class MaterialController extends Controller {
     public function update(Request $request, $id) {
         $regras = [
             'nome' => 'required|max:100|min:10',
-            'descicao' => 'required|max:1000|min:20',
-            'foto' => 'required'
+            'descricao' => 'required|max:1000|min:20'    
         ];
 
         $msgs = [

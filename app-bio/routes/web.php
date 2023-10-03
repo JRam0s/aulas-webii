@@ -27,3 +27,6 @@ Route::prefix('/site')->group(function() {
     Route::get('/material', 'SiteController@getMateriais')->name('site.material');
 });
 
+Route::get('/teste', function () {
+    return view('indexJV');
+})->name('teste');
